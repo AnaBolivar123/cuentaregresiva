@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuenta regresiva</title>
+<style>
+    body {
+        background-color: #E1CF94;
+        font-family: 'Georgia', serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-style: italic;
+        color: #5c3b28;
+        margin-top: 50px;
+    }
+
+    .countdown {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        gap: 20px;
+    }
+
+    .time-box {
+        border: 1px solid #aaa;
+        border-radius: 10px;
+        padding: 20px 15px;
+        min-width: 80px;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .time-box span {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #0b355e;
+    }
+
+    .time-box small {
+        font-size: 1rem;
+        font-style: italic;
+        color: #0b355e;
+    }
+
+    /* Color más claro para segundos */
+    .seconds span {
+        color: rgba(11, 53, 94, 0.4);
+    }
+</style>
+</head>
+<body>
+
+<h1>Faltan...</h1>
+
+<div class="countdown">
+    <div class="time-box">
+        <span id="days">00</span>
+        <small>Días</small>
+    </div>
+    <div class="time-box">
+        <span id="hours">00</span>
+        <small>Horas</small>
+    </div>
+    <div class="time-box">
+        <span id="minutes">00</span>
+        <small>Minutos</small>
+    </div>
+    <div class="time-box seconds">
+        <span id="seconds">00</span>
+        <small>Segundos</small>
+    </div>
+</div>
+
+<script>
+    
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 68); 
+    targetDate.setHours(targetDate.getHours() + 12);
+    targetDate.setMinutes(targetDate.getMinutes() + 4);
+    targetDate.setSeconds(targetDate.getSeconds() + 30);
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            document.querySelector(".countdown").innerHTML = "<h2>¡Llegó el día!</h2>";
+            clearInterval(timer);
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("days").textContent = String(days).padStart(2, '0');
+        document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+    }
+
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+
+</body>
+</html>
